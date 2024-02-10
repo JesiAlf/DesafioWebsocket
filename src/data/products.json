@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "title": "Product A",
+      "description": "Products one",
+      "price": 2000,
+      "thumbnail": "without image",
+      "code": "1234j",
+      "stock": 11
+    },
+    {
+      "id": 2,
+      "title": "otro titulo",
+      "description": "Products 3",
+      "price": 4500,
+      "thumbnail": "without image",
+      "code": "1234JE",
+      "stock": 12
+    }
+  ]
