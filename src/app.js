@@ -8,6 +8,8 @@ import {ProductManager} from "./manager/productsManager.js";
 //Middlewares
 const app = express()
 const PORT=8080;
+const httpServer=app.listen(PORT,()=>console.log(`server runing o post ${PORT}`));
+
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -21,10 +23,10 @@ const __dirname=dirname(__filename)
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(express.static(path.join(__dirname,"/public")))
-
-
-//export default __dirname;
+app.use(express.static(path.join(__dirname,"/views")))
+//app.use("/api/products",productRouter)
+//app.use("/api/carts",cartsRouter)
+app.use("/",viewsRouter);
 
 
 //estructura codigo handlebans_
@@ -40,18 +42,16 @@ app.set("views",__dirname +" /views");
 app.set("view  engine","handlebars");
 
 
-const httpServer=app.listen(PORT,()=>console.log(`server runing o post ${PORT}`));
 
 //conexiion con socket.io_
 
 const socketServer=new Server(httpServer)
 
-app.use("/",viewsRouter);
 
 socketServer.on("connection", socket=>{
     console.log("Nueva conexion")
     socket.on("message", data=>{
-        socket.emit("mensaje",data)
+        console.log(data)
     })
 
 

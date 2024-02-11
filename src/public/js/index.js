@@ -22,5 +22,5 @@ io.on("connection", (socket) => {
   });
   
   io.listen(3000);*/
-const socket= io()
-socket.emit("message","comunicacion desde websocket")
+const socket= io();
+socket.emit("message","comunicacion desde websocket");
