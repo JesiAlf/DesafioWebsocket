@@ -3,8 +3,14 @@ import { ProductManager } from "../manager/productsManager.js";
 
 const router = express.Router();
 
-router.get("/api/products", async (req, res) => {
-  try {
+router.get("/", (req, res) => { 
+  const p= new ProductManager();
+  const Product= p.getProduct();
+  res.render("realTimeProduts",{
+    Product
+  });
+});
+  /*try {
     const products = await ProductManager.getInstance().getProducts();
     res.render("realTimeProducts", {
       title: "real time products",
@@ -13,10 +19,22 @@ router.get("/api/products", async (req, res) => {
   } catch (error) {
     console.error("Error al obtener los productos:", error);
     res.status(500).send("Error del servidor");
-  }
-});
+  }*/
 
-router.post("/api/products", async (req, res) => {
+router.post("/", (req, res) => {
+  const p= new ProductManager();
+  const addProduct= p.addProduct();
+  res.render("realTimeProduts",{
+    addProduct
+  });
+});
+  router.delete("/", (req, res) => {
+    const p= new ProductManager();
+    const deleteProduct= p.deleteProduct();
+    res.render("realTimeProduts",{
+      deleteProduct
+    });
+/*router.post("/", async (req, res) => {
   try {
     const newProduct = req.body;
     await ProductManager.getInstance().addProduct(newProduct);
@@ -27,7 +45,7 @@ router.post("/api/products", async (req, res) => {
       .json({ status: "success", message: "Producto agregado exitosamente" });
   } catch (error) {
     res.status(500).json({ status: "error", message: error.message });
-  }
+  }*/
 });
 
 export default router;

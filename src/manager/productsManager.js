@@ -35,7 +35,7 @@ export class ProductManager {
     }
   }
 
-  getProduct() {
+   getProduct() {
     try {
       const data = fs.readFileSync(this.path, "utf8");
       //el archivo como va a contener texto, tengo que parcearlo para que vuelva a hacer un arreglo de objetos y se lo asignamos a nuestros arreglo de productos el que se sobreescribe con lo q tenga el archivo y se actualiza, cada vez q se llame al getproducts

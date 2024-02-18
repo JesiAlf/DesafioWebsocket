@@ -1,6 +1,7 @@
 const socket = io();
 
 socket.on("productos", (productos) => {
+  console.log(productos)
   const producCont = document.getElementById("#productos-table");
   if (!producCont) {
     console.error("El producto con dicho id no funciona");
@@ -8,7 +9,7 @@ socket.on("productos", (productos) => {
   }
 
   const headerHTML = `
-    <tr>
+  <tr>
     <th>id:</th>
     <th>title:</th>
     <th>description:</th>
@@ -18,7 +19,7 @@ socket.on("productos", (productos) => {
     <th>category:</th>
     <th>thumbnail:</th>
 
-    </tr>
+  </tr>
     `;
   producCont.innerHTML = headerHTML;
 
@@ -38,9 +39,10 @@ socket.on("productos", (productos) => {
   });
 });
 
-document.getElementById("newProducto").addEventListener("submit",(event)=>{
+document.getElementById("#new-Producto").addEventListener("submit",(event)=>{
    event.preventDefault();
-   socket.emit("newProduct",{
+
+   socket.emit("new-Product",{
     title:document.getElementById("title").value,
     description:document.getElementById("description").value,
     code:document.getElementById("code").value,
@@ -53,13 +55,13 @@ document.getElementById("newProducto").addEventListener("submit",(event)=>{
 event.target.reset();
 });
 
-document.getElementById("deleteProduct").addEventListener("submit", function(event) {
+document.getElementById("#delete-Product").addEventListener("submit", function(event) {
     event.preventDefault();
     
-    const pDeleteId = document.getElementById("id").value;
+    const pDeleteId = document.getElementById("#id").value;
     
     console.log(pDeleteId);
-    socket.emit("deleteProduct", pDeleteId);
+    socket.emit("#delete-Product", pDeleteId);
     
     event.target.reset();
 });
@@ -67,9 +69,9 @@ document.getElementById("deleteProduct").addEventListener("submit", function(eve
 
 socket.on("response",(response)=>{
     if (response.status==="success") {
-        document.getElementById("responsiveCont").innerHTML=`<p class="success">${response.message}</p>`;
+        document.getElementById("#responsive-Cont").innerHTML=`<p class="success">${response.message}</p>`;
 
     } else {
-        document.getElementById("responsiveCont").innerHTML=`<p class="error">${response.message}</p>`
+        document.getElementById("#responsive-Cont").innerHTML=`<p class="error">${response.message}</p>`
     }
 })

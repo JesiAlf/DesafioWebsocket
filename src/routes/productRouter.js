@@ -16,11 +16,11 @@ router.use((req,res)=>{
 }
 })
 
-router.get("/api/products", async (req, res) => {
+router.get("/api/products/pid", async (req, res) => {
   try {
     const limit = parseInt(req.params.pid);
-    //const p=new ProductManager("./products.json")
-    const products = await ProductManager.getProduct();
+    const productManager=new ProductManager("./products.json")
+    const products = await productManager.getProduct();
     if (!isNaN(limit) && limit > 0) {
       let showProducts = products.slice(0, limit);
         res.json(showProducts);
