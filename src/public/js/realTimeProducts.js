@@ -61,7 +61,7 @@ document.getElementById("#delete-Product").addEventListener("submit", function(e
     const pDeleteId = document.getElementById("#id").value;
     
     console.log(pDeleteId);
-    socket.emit("#delete-Product", pDeleteId);
+    socket.emit("deleteProduct", pDeleteId);
     
     event.target.reset();
 });
@@ -69,9 +69,9 @@ document.getElementById("#delete-Product").addEventListener("submit", function(e
 
 socket.on("response",(response)=>{
     if (response.status==="success") {
-        document.getElementById("#responsive-Cont").innerHTML=`<p class="success">${response.message}</p>`;
+        document.getElementById("responsiveCont").innerHTML=`<p class="success">${response.message}</p>`;
 
     } else {
-        document.getElementById("#responsive-Cont").innerHTML=`<p class="error">${response.message}</p>`
+        document.getElementById("responsiveCont").innerHTML=`<p class="error">${response.message}</p>`
     }
 })

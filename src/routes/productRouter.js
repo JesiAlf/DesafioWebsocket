@@ -5,8 +5,7 @@ import {ProductManager} from "../manager/productManager.js"
 
 const router = express.Router();
 
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
+
 
 router.use((req,res)=>{
   if(req==="POST"|| req==="PUT"){
@@ -16,13 +15,13 @@ router.use((req,res)=>{
 }
 })
 
-router.get("/api/products/pid", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const limit = parseInt(req.params.pid);
+    const limit = parseInt(req.query);
     const productManager=new ProductManager("./products.json")
     const products = await productManager.getProduct();
     if (!isNaN(limit) && limit > 0) {
-      let showProducts = products.slice(0, limit);
+      const showProducts = products.slice(0, limit);
         res.json(showProducts);
     } else {
       res.json(products);
@@ -32,7 +31,7 @@ router.get("/api/products/pid", async (req, res) => {
   }
 });
    
-router.get("/api/products/:pid", async (req, res) => {
+router.get("/:pid", async (req, res) => {
   try {
     const id=parseInt(req.params.pid);
     //const p=new ProductManager("./products.json")
@@ -43,7 +42,7 @@ router.get("/api/products/:pid", async (req, res) => {
   }
 });
 
-router.post("/api/products", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const product = req.body;
     const newProduct = await ProductManager.addProduct(product);
@@ -53,7 +52,7 @@ router.post("/api/products", async (req, res) => {
   }
 });
 
-router.put("/api/products/:pid", async(req, res)=>{
+router.put("/:pid", async(req, res)=>{
   try{
     const id=parseInt(req.params.pid);
     const product=req.body;
@@ -64,7 +63,7 @@ router.put("/api/products/:pid", async(req, res)=>{
   }
 });
 
-router.delete("/api/products/:pid", async (req, res) => {
+router.delete("/:pid", async (req, res) => {
   try {
     const id= parseInt (req.params.pid);
     const deleteProduct = await ProductManager.deleteProduct(id);

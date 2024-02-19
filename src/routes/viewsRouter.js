@@ -26,8 +26,8 @@ const productManager = new ProductManager();
 
 const router = express.Router();
 
-router.get("/realitimeproducts", async (req, res) => {
-  const allProducts = await productManager.getProducts();
+router.get("/realitimeproducts",  (req, res) => {
+  const allProducts =  productManager.getProduct();
   res.render("realTimeProducts", {
     page: "Real-Time Products",
     products: allProducts,

@@ -3,7 +3,7 @@ import fs from "fs";
 export class ProductManager {
   constructor() {
     this.products = [];
-    this.path = "../data/products.json";
+    this.path = "./data/products.json";
   }
   
   addProduct(product) {
@@ -39,7 +39,7 @@ export class ProductManager {
     try {
       const data = fs.readFileSync(this.path, "utf8");
       //el archivo como va a contener texto, tengo que parcearlo para que vuelva a hacer un arreglo de objetos y se lo asignamos a nuestros arreglo de productos el que se sobreescribe con lo q tenga el archivo y se actualiza, cada vez q se llame al getproducts
-      this.products = JSON.parse(data);
+      JSON.parse(data);
       return this.products;
 
     } catch (error) {
