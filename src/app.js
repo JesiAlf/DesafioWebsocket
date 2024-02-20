@@ -6,7 +6,7 @@ import express from "express";
 import { ProductManager } from "./manager/productsManager.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import routerRealTimesProducts from "./routes/realTimeProductsRouter.js";
+import realTimeProducts from "./routes/realTimeProductsRouter.js";
 //import cartsRouter from"./routes/";
 //import {productRouter} from"./routes/productRouter.js";
 
@@ -23,17 +23,20 @@ const socketServer = new Server(httpServer);
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "/views")));
+app.use(express.static(path.join(__dirname, "/public")));
 
-app.use("/", viewsRouter);
+//Routes
+//app.use('/api/products', productsRouter)
+//app.use('/api/carts', cartsRouter)
 
+app.use("/",viewsRouter);
+app.use("/realTimeProducts",realTimeProducts)
 //estructura codigo handlebans_
 
 app.engine("handlebars", handlebars.engine());
-
 //tenemos que setear, debemos decir q nuestro views engines y la extencion de los archivo estan en handlebars._
 
-app.set("view  engine", "handlebars");
+app.set("view engine","handlebars");
 //luego decirles donde estan esos archivos_
 
 app.set("views", path.join(__dirname + " /views"));
@@ -63,12 +66,12 @@ app.set("views", path.join(__dirname + " /views"));
         Product
       );
       const pushId = pushNewProduct.id;
-      io.emit("responde", {
-        status: "success",
+      socketServer.emit("products", Product)
+      socketServer.emit("responde", { status: "success",
         message: `product ${pushId}successfully added`,
       });
     } catch (error) {
-      io.emit("responde", { status: "error", message: error.message });
+      socketServer.emit("responde", { status: "error", message: error.message });
     }
   });
 
@@ -77,13 +80,13 @@ app.set("views", path.join(__dirname + " /views"));
       const pId = parseInt(id);
       await ProductManager.getInstance().deleteProduct(pId);
       const updatedList = await ProductManager.getInstance().getProduct();
-      socket.emit("products", updatedList);
-      socket.emit("responde", {
+      socketServer.emit("products", updatedList);
+      socketServer.emit("responde", {
         status: "success",
         message: "Product delete successfully",
       });
     } catch (error) {
-      socket.emit("responde", { status: "error", message: error.message });
+      socketServer.emit("responde", { status: "error", message: error.message });
     }
   });
 });

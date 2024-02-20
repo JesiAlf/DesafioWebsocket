@@ -26,11 +26,10 @@ const productManager = new ProductManager();
 
 const router = express.Router();
 
-router.get("/realitimeproducts",  (req, res) => {
+router.get("/",  (req, res) => {
   const allProducts =  productManager.getProduct();
   res.render("realTimeProducts", {
-    page: "Real-Time Products",
-    products: allProducts,
+  allProducts,
   });
 });
 export default router;

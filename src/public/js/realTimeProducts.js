@@ -1,8 +1,8 @@
 const socket = io();
 
-socket.on("productos", (productos) => {
-  console.log(productos)
-  const producCont = document.getElementById("#productos-table");
+socket.on("products", (products) => {
+  console.log(products)
+  const producCont = document.getElementById("#products-table");
   if (!producCont) {
     console.error("El producto con dicho id no funciona");
     return;
@@ -69,9 +69,9 @@ document.getElementById("#delete-Product").addEventListener("submit", function(e
 
 socket.on("response",(response)=>{
     if (response.status==="success") {
-        document.getElementById("responsiveCont").innerHTML=`<p class="success">${response.message}</p>`;
+        document.getElementById("#responsiveCont").innerHTML=`<p class="success">${response.message}</p>`;
 
     } else {
-        document.getElementById("responsiveCont").innerHTML=`<p class="error">${response.message}</p>`
+        document.getElementById("#responsiveCont").innerHTML=`<p class="error">${response.message}</p>`
     }
 })
