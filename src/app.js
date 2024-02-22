@@ -7,8 +7,8 @@ import { ProductManager } from "./manager/productsManager.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import realTimeProducts from "./routes/realTimeProductsRouter.js";
-//import cartsRouter from"./routes/";
-//import {productRouter} from"./routes/productRouter.js";
+//import cartsRouter from"./routes/carts.router.js";
+//import productRouter from"./routes/productRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,14 +22,15 @@ const httpServer = app.listen(PORT, () =>
 const socketServer = new Server(httpServer);
 //Middleware
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname + "/public")));
 
 //Routes
-//app.use('/api/products', productsRouter)
-//app.use('/api/carts', cartsRouter)
+//app.use('/api/products/', productRouter)
+//app.use('/api/carts/', cartsRouter)
 
-app.use("/",viewsRouter);
+app.use("/api",viewsRouter);
 app.use("/realTimeProducts",realTimeProducts)
 //estructura codigo handlebans_
 
