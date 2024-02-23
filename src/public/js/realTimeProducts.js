@@ -23,7 +23,7 @@ socket.on("products", (products) => {
     `;
   producCont.innerHTML = headerHTML;
 
-  productos.forEach((producto) => {
+  products.forEach((producto) => {
     producCont.innerHTML += `
         <tr>
         <td>${producto.id}</td>

@@ -1,5 +1,5 @@
 import express from "express";
-import {ProductManager} from "../manager/productManager.js"
+import {ProductManager} from "../manager/productsManager.js"
 
 
 
@@ -15,7 +15,7 @@ router.use((req,res)=>{
 }
 })
 
-router.get("/", async (req, res) => {
+router.get("/products", async (req, res) => {
   try {
     const limit = parseInt(req.query);
     const productManager=new ProductManager("./products.json")
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
   }
 });
    
-router.get("/:pid", async (req, res) => {
+router.get("/products/:pid", async (req, res) => {
   try {
     const id=parseInt(req.params.pid);
     //const p=new ProductManager("./products.json")
@@ -42,7 +42,7 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/products", async (req, res) => {
   try {
     const product = req.body;
     const newProduct = await ProductManager.addProduct(product);

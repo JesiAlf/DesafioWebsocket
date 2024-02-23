@@ -3,14 +3,14 @@ import { ProductManager } from "../manager/productsManager.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => { 
-  //const p= new ProductManager();
-  const Product= await ProductManager.getProduct();
-  res.render("realTimeProduts",{
-    Product
+router.get("/", async (req, res) => {
+  const p = new ProductManager();
+  const Product = p.getProduct();
+  res.render("realTimeProducts", {
+    Product,
   });
 });
-  
+
 /*router.post("/", (req, res) => {
   const p= new ProductManager();
   const addProduct= p.addProduct();

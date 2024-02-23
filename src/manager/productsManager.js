@@ -3,7 +3,7 @@ import fs from "fs";
 export class ProductManager {
   constructor() {
     this.products = [];
-    this.path = "/data/products.json";
+    this.path = "../src/data/products.json";
   }
   
   addProduct(product) {

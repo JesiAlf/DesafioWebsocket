@@ -5,13 +5,20 @@ import realTimeProducts from "./routes/realTimeProductsRouter.js";
 //import path from "path";
 import express from "express";
 import { ProductManager } from "./manager/productsManager.js";
+//import {CartManager} from "./manager/cartsManager.js"
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-//import cartsRouter from"./routes/carts.router.js";
-//import productRouter from"./routes/productRouter.js";
+import cartsRouter from"./routes/carts.router.js";
+import productRouter from"./routes/productRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+//const pathProducts = path.join(__dirname, "./src/data/products.json");
+//const pathCarts = path.join(__dirname, "./src/data/carts.json");
+
+//export const productManager = new ProductManager(pathProducts);
+//export const cartManager = new CartManager(pathCarts);
 
 //Middlewares
 const app = express();
@@ -23,12 +30,13 @@ const socketServer = new Server(httpServer);
 //Middleware
 app.use(express.json());
 
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/src/public"));
 
 //Routes
-//app.use('/api/products/', productRouter)
-//app.use('/api/carts/', cartsRouter)
+app.use('/realTimeProducts', productRouter)
+app.use('/', cartsRouter)
 
 app.use("/", viewsRouter);
 app.use("/realTimeProducts", realTimeProducts);
@@ -52,7 +60,7 @@ socketServer.on("connection", (socket) => {
     socketServer.emit("response", { status: "error", message: error.message });
   }
 
-  socket.on("newProduct", async (newProduct) => {
+  socket.on("new-Product", async (newProduct) => {
     try {
       const Product = {
         title: newProduct.title,
@@ -79,7 +87,7 @@ socketServer.on("connection", (socket) => {
     }
   });
 
-  socket.on("deleteProduct", async (id) => {
+  socket.on("delete-product", async (id) => {
     try {
       const pId = parseInt(id);
       await ProductManager.getInstance().deleteProduct(pId);
